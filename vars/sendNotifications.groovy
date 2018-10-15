@@ -1,33 +1,25 @@
 #!/usr/bin/env groovy
 
-def call(String buildStatus = 'STARTED')  {
-	buildStatus = buildStatus ?: 'SUCCESS'
+/**
+ * Send notifications based on build status string
+ */
+def call(String buildStatus = 'STARTED') {
+	// build status of null means successful
+	buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
 	// Default values
-	def color = ''
-	def prefix = "${env.JOB_NAME} - #${env.BUILD_NUMBER}"
-	def suffix = "(<${env.BUILD_URL}|Open>)"
-	def message = ''
+	def colorCode = '#FF0000'
+  	def summary = "${subject} (${env.BUILD_URL})"
+  	
+  	// Override default values based on build status
+  	if (buildStatus == 'STARTED') {
+    	color = 'YELLOW'
+    	colorCode = '#FFFF00'
+  	} else if (buildStatus == 'SUCCESSFUL') {
+    	color = 'GREEN'
+    	colorCode = '#00FF00'
+  	}
 
-	def duration = ''
-	if (currentBuild.duration/(1000.0*60*60) >= 1) {
-		duration = "${currentBuild.duration/(1000*60*60)} hrs"
-	} else if (currentBuild.duration/(1000.0*60) >= 1) {
-		duration = "${currentBuild.duration/(1000*60)} min"
-	} else {
-		duration = "${currentBuild.duration/(1000)} sec"
-	}
-
-	if (buildStatus == 'STARTED') {
-		color = 'warning'
-		message = "${prefix} Started ${suffix}"
-	} else if (buildStatus == 'SUCCESS') {
-		color = 'good'
-		message = "${prefix} Success after ${duration} ${suffix}"
-	} else {
-		color = 'danger'
-		message = "${prefix} Failed after ${duration} ${suffix}"
-	}
-
-	slackSend (color: color, message: message)
+  	// Send notifications
+  	slackSend (color: colorCode, message: summary)
 }
