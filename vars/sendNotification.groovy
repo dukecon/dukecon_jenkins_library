@@ -23,10 +23,10 @@ def call(String buildStatus = 'STARTED') {
     summary += "Success after ${duration} "
   } else if (buildStatus) {
     color = 'danger'
-    summary += "Failed after x "
+    summary += "Failed after ${duration} "
   }
 
-  summary += "(<${env.BUILD_URL}|Open>)"
+  summary += "(<${env.BUILD_URL}/display/redirect|Open>)"
 
   // Send notifications
   slackSend (color: color, message: summary)
