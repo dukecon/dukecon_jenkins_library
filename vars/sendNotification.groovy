@@ -10,7 +10,7 @@ def call(String buildStatus = 'STARTED') {
 	buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
 	// Default values
-  def duration = Thread.currentThread().executable.getDurationString()
+  def duration = currentBuild.durationString
 	def colorCode = '#FF0000'
   def summary = "${env.JOB_NAME} - #${env.BUILD_NUMBER} "
   	
