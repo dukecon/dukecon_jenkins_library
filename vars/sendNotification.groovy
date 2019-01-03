@@ -3,12 +3,14 @@
 /**
  * Send notifications based on build status string
  */
+import hudson.model.*
+
 def call(String buildStatus = 'STARTED') {
 	// build status of null means successful
 	buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
 	// Default values
-  def duration = build.getDurationString()
+  def duration = Thread.currentThread().executable.getDurationString()
 	def colorCode = '#FF0000'
   def summary = "${env.JOB_NAME} - #${env.BUILD_NUMBER} "
   	
