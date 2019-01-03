@@ -11,26 +11,23 @@ def call(String buildStatus = 'STARTED') {
 
 	// Default values
   def duration = currentBuild.durationString
-	def colorCode = '#FF0000'
+	def color = 'warning'
   def summary = "${env.JOB_NAME} - #${env.BUILD_NUMBER} "
   	
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
-    color = 'YELLOW'
-    colorCode = '#FFFF00'
     summary += "Starting build "
   } else if (buildStatus == 'SUCCESSFUL') {
-    color = 'GREEN'
+    color = 'good'
     colorCode = '#00FF00'
     summary += "Success after ${duration} "
   } else if (buildStatus) {
-    color = 'RED'
-    colorCode = '#FF0000'
+    color = 'danger'
     summary += "Failed after x "
   }
 
   summary += "(<${env.BUILD_URL}|Open>)"
 
   // Send notifications
-  slackSend (color: colorCode, message: summary)
+  slackSend (color: color, message: summary)
 }
