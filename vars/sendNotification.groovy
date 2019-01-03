@@ -3,7 +3,7 @@
 /**
  * Send notifications based on build status string
  */
-def call(String buildStatus = 'STARTED') {
+def call(String buildStatus = 'STARTED', int duration = 0) {
 	// build status of null means successful
 	buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
@@ -19,7 +19,7 @@ def call(String buildStatus = 'STARTED') {
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
     colorCode = '#00FF00'
-    summary += "Success after x "
+    summary += "Success after ${duration} "
   } else if (buildStatus) {
     color = 'RED'
     colorCode = '#FF0000'
