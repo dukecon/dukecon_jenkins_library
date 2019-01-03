@@ -3,11 +3,12 @@
 /**
  * Send notifications based on build status string
  */
-def call(String buildStatus = 'STARTED', int duration = 0) {
+def call(String buildStatus = 'STARTED') {
 	// build status of null means successful
 	buildStatus =  buildStatus ?: 'SUCCESSFUL'
 
 	// Default values
+  def duration = currentBuild.duration
 	def colorCode = '#FF0000'
   def summary = "${env.JOB_NAME} - #${env.BUILD_NUMBER} "
   	
