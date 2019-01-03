@@ -19,6 +19,11 @@ def call(String buildStatus = 'STARTED') {
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
     colorCode = '#00FF00'
+    summary += "Success after x "
+  } else if (buildStatus) {
+    color = 'RED'
+    colorCode = '#FF0000'
+    summary += "Failed after x "
   }
 
   summary += "(<${env.BUILD_URL}|Open>)"
