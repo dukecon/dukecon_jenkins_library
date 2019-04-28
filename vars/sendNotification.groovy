@@ -17,7 +17,7 @@ def call(String buildStatus = 'STARTED') {
   // Override default values based on build status
   if (buildStatus == 'STARTED') {
     summary += "Starting build "
-  } else if (buildStatus == 'SUCCESSFUL') {
+  } else if (buildStatus == 'SUCCESS') {
     color = 'good'
     colorCode = '#00FF00'
     summary += "Success after ${duration} "
